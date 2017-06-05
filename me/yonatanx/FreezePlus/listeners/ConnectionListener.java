@@ -1,7 +1,7 @@
 package me.yonatanx.FreezePlus.listeners;
 
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
