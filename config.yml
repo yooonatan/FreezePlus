@@ -1,0 +1,28 @@
+teamspeak_ip: ts.example.com
+
+frozen_item:
+    name: "&4&lDO NOT LOGOUT&c&l, YOU WILL BE BANNED!"
+    lore:
+       - "&c&lJoin our TeamSpeak: %teamspeak_ip%"
+       - "&cYou have 5 minutes!"
+       - "&aAre you coming to the TeamSpeak?"
+       - "&aClick the green wool below to notify us!"
+
+inventory_title: "&4&lYou have been frozen!"
+
+frozen_server_message:
+    - ""
+    - "&c\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588"
+    - ""
+    - "&cServer is currently frozen."
+    - ""
+    - "&c\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588"
+    - ""
+unfrozen_server_message:
+    - ""
+    - "&a\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588"
+    - ""
+    - "&aServer has been unfrozen!"
+    - ""
+    - "&a\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588"
+    - ""

@@ -1,0 +1,34 @@
+name: FreezePlus
+author: YonatanX
+version: 1.0
+main: me.yonatanx.FreezePlus.FreezePlus
+commands:
+  freeze:
+     description: Freeze a player with a GUI.
+     aliases: [ss]
+  unfreeze:
+     description: Unfreeze a player.
+  freezeserver:
+     description: Freeze the entire server.
+  unfreezeserver:
+     description: Unfreeze the entire server.
+  freezeplus:
+     description: Retrieve information about FreezePlus.
+     aliases: [fp]
+  fpreload:
+     description: Reloads the config.
+permissions:
+  freezeplus.freeze:
+    description: Allows you to freeze other players.
+  freezeplus.unfreeze:
+    description: Allows you to unfreeze other players.
+  freezeplus.freezeserver:
+    description: Allows you to freeze the entire server.
+  freezeplus.unfreezeserver:
+    description: Unfreeze everyone on the entire server.
+  freezeplus.freezeserver.bypass:
+    description: Makes you invulnerable to being frozen while the server is frozen.
+  freezeplus.freeze.bypass:
+    description: Makes you invulnerable to being frozen by someone/console.
+  freezeplus.reloadcfg:
+    description: Grants you the ability to reload the configuration.
