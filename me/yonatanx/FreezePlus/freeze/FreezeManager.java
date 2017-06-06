@@ -1,6 +1,5 @@
 package me.yonatanx.FreezePlus.freeze;
 
-import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.utils.FreezeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,18 +16,20 @@ import java.util.UUID;
  */
 
 public class FreezeManager {
-    private static boolean frozen;
-    private static Map<UUID, UUID> frozenPlayers;
-    private static Map<UUID, ItemStack[]> oldInventories;
-    private static int taskID;
+    private FrozenInventory frozenInventory;
+    private boolean frozen;
+    private Map<UUID, UUID> frozenPlayers;
+    private Map<UUID, ItemStack[]> oldInventories;
+    private int taskID;
 
-    public static void init(){
+    public FreezeManager(){
         frozen = false;
         frozenPlayers = new HashMap<>();
         oldInventories = new HashMap<>();
+        frozenInventory = new FrozenInventory();
     }
 
-    public static void freezeServer(){
+    public void freezeServer(){
         frozen = true;
         BukkitTask task = new BukkitRunnable() {
             @Override
@@ -36,12 +37,12 @@ public class FreezeManager {
                 FreezeUtils.getFrozenServerMessage().forEach(Bukkit::broadcastMessage
                 );
             }
-        }.runTaskTimer(FreezePlus.get(), 1L, 300);
+        }.runTaskTimer(Bukkit.getPluginManager().getPlugin("FreezePlus"), 1L, 300);
 
         taskID = task.getTaskId();
     }
 
-    public static void unfreezeServer(){
+    public void unfreezeServer(){
         frozen = false;
         Bukkit.getScheduler().cancelTask(taskID);
 
@@ -49,21 +50,21 @@ public class FreezeManager {
         );
     }
 
-    public static void freezePlayer(Player player, Player freezer) {
+    public void freezePlayer(Player player, Player freezer) {
         frozenPlayers.put(player.getUniqueId(), freezer == null ? null : freezer.getUniqueId());
         oldInventories.put(player.getUniqueId(), player.getInventory().getContents());
 
         player.getInventory().clear();
 
-        for (int i = 0; i < FrozenInventory.getBottomInv().length; i++)
-            if (FrozenInventory.getBottomInv()[i] != null)
-                player.getInventory().setItem(i, FrozenInventory.getBottomInv()[i]);
+        for (int i = 0; i < frozenInventory.getBottomInv().length; i++)
+            if (frozenInventory.getBottomInv()[i] != null)
+                player.getInventory().setItem(i, frozenInventory.getBottomInv()[i]);
 
-        player.openInventory(FrozenInventory.getTopInv());
+        player.openInventory(frozenInventory.getTopInv());
 
     }
 
-    public static void unfreezePlayer(Player player){
+    public void unfreezePlayer(Player player){
         if (oldInventories.containsKey(player.getUniqueId())){
             player.getInventory().clear();
             for (int i = 0; i < player.getInventory().getSize(); i++) {
@@ -79,19 +80,22 @@ public class FreezeManager {
         player.closeInventory();
     }
 
-    public static boolean isFrozen(Player player){
+    public boolean isFrozen(Player player){
         return frozenPlayers.containsKey(player.getUniqueId());
     }
-    public static boolean isServerFrozen(){
+    public boolean isServerFrozen(){
         return frozen;
     }
 
-    public static UUID getFreezer(UUID playerUUID){
+    public UUID getFreezer(UUID playerUUID){
         return frozenPlayers.get(playerUUID);
     }
 
-    public static Player[] getFrozenPlayers(){
+    public Player[] getFrozenPlayers(){
         return (Player[]) frozenPlayers.keySet().toArray();
     }
 
+    public FrozenInventory getFrozenInventory() {
+        return frozenInventory;
+    }
 }

@@ -12,22 +12,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class FreezePlus extends JavaPlugin {
 
     private static FreezePlus freezePlus;
+    private FreezeManager freezeManager;
 
     public void onEnable(){
         freezePlus = this;
+        freezeManager = new FreezeManager();
 
         registerCommands();
         registerListeners();
-        createConfig();
-
-        FreezeManager.init();
+        saveDefaultConfig();
     }
 
     public void onDisable(){}
-
-    public static FreezePlus get() {
-        return freezePlus;
-    }
 
     private void registerCommands(){
         getCommand("freeze").setExecutor(new FreezeCmd());
@@ -37,6 +33,7 @@ public class FreezePlus extends JavaPlugin {
         getCommand("freezeplus").setExecutor(new FreezePlusCmd());
         getCommand("fpreload").setExecutor(new FPReloadCmd());
     }
+
     private void registerListeners(){
         getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
@@ -46,7 +43,11 @@ public class FreezePlus extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 
-    private void createConfig(){
-        this.saveDefaultConfig();
+    public static FreezePlus get(){
+        return freezePlus;
+    }
+
+    public FreezeManager getFreezeManager() {
+        return freezeManager;
     }
 }

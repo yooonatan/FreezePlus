@@ -2,7 +2,6 @@ package me.yonatanx.FreezePlus.listeners;
 
 import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
-import me.yonatanx.FreezePlus.freeze.FrozenInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,13 +16,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class InventoryListener implements Listener {
 
+    private FreezeManager fm;
+
+    public InventoryListener(){
+        fm = FreezePlus.get().getFreezeManager();
+    }
+
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event){
-        if (FreezeManager.isFrozen((Player) event.getPlayer()))
+        if (fm.isFrozen((Player) event.getPlayer()))
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    event.getPlayer().openInventory(FrozenInventory.getTopInv());
+                    event.getPlayer().openInventory(fm.getFrozenInventory().getTopInv());
                 }
             }.runTaskLater(FreezePlus.get(), 1L);
     }
@@ -31,14 +36,14 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
         if (event.getWhoClicked() instanceof Player) {
-            if (FreezeManager.isServerFrozen() && !event.getWhoClicked().hasPermission("freezeplus.freezeserver.bypass")){
+            if (fm.isServerFrozen() && !event.getWhoClicked().hasPermission("freezeplus.freezeserver.bypass")){
                 event.setCancelled(true);
             } else {
-                if (FreezeManager.isFrozen((Player) event.getWhoClicked())) {
+                if (fm.isFrozen((Player) event.getWhoClicked())) {
                     if (event.getCurrentItem() != null) {
-                        if (event.getCurrentItem().equals(FrozenInventory.iDontHaveTeamSpeak())) {
+                        if (event.getCurrentItem().equals(fm.getFrozenInventory().iDontHaveTeamSpeak())) {
                             ((Player) event.getWhoClicked()).chat("I don't have TeamSpeak, where can I download it?");
-                        } else if (event.getCurrentItem().equals(FrozenInventory.imComing())) {
+                        } else if (event.getCurrentItem().equals(fm.getFrozenInventory().imComing())) {
                             ((Player) event.getWhoClicked()).chat("Okay, I'm coming!");
 
                         }
@@ -51,9 +56,9 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event){
-        if (FreezeManager.isFrozen(event.getPlayer()))
+        if (fm.isFrozen(event.getPlayer()))
             event.setCancelled(true);
-        else if (FreezeManager.isServerFrozen() && !event.getPlayer().hasPermission("freezeplus.freezeserver.bypass"))
+        else if (fm.isServerFrozen() && !event.getPlayer().hasPermission("freezeplus.freezeserver.bypass"))
             event.setCancelled(true);
     }
 }

@@ -1,5 +1,6 @@
 package me.yonatanx.FreezePlus.listeners;
 
+import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -12,9 +13,15 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
 
+    private FreezeManager fm;
+
+    public ChatListener(){
+        fm = FreezePlus.get().getFreezeManager();
+    }
+
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event){
-        if (FreezeManager.isServerFrozen() && !event.getPlayer().hasPermission("freezeplus.freezeserver.bypass")) {
+        if (fm.isServerFrozen() && !event.getPlayer().hasPermission("freezeplus.freezeserver.bypass")) {
             event.getPlayer().sendMessage(ChatColor.RED + "The server is currently frozen.");
             event.setCancelled(true);
         }

@@ -1,7 +1,8 @@
 package me.yonatanx.FreezePlus.listeners;
 
+import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +15,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ConnectionListener implements Listener {
 
+    private FreezeManager fm;
+
+    public ConnectionListener(){
+        fm = FreezePlus.get().getFreezeManager();
+    }
+
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
-        if (FreezeManager.isFrozen(event.getPlayer())){
+        if (fm.isFrozen(event.getPlayer())){
             for (Player player : Bukkit.getServer().getOnlinePlayers()){
                 if (player.hasPermission("freezeplus.notify"))
                    player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "" + ChatColor.BOLD + "!" + ChatColor.RESET + ChatColor.GRAY + "] " + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + ChatColor.GRAY + " has disconnected while frozen!");

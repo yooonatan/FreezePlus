@@ -1,5 +1,6 @@
 package me.yonatanx.FreezePlus.cmds;
 
+import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,16 +19,16 @@ public class FreezeCmd implements CommandExecutor {
         if (commandSender.hasPermission("freezeplus.freeze")){
             if (strings.length == 1){
                 Player player = Bukkit.getPlayer(strings[0]);
-
-                if (!FreezeManager.isFrozen(player)) {
+                FreezeManager fm = FreezePlus.get().getFreezeManager();
+                if (!fm.isFrozen(player)) {
                     if (!player.hasPermission("freezeplus.freeze.bypass")) {
-                        FreezeManager.freezePlayer(player, commandSender instanceof Player ? (Player) commandSender : null);
+                        fm.freezePlayer(player, commandSender instanceof Player ? (Player) commandSender : null);
                         commandSender.sendMessage(ChatColor.GRAY + "You have froze " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + ".");
                     }
                     else commandSender.sendMessage(ChatColor.RED + "This player cannot be frozen.");
                 }
                 else {
-                    FreezeManager.unfreezePlayer(player);
+                    fm.unfreezePlayer(player);
                     commandSender.sendMessage(ChatColor.GRAY + "You have unfroze " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + ".");
                 }
 

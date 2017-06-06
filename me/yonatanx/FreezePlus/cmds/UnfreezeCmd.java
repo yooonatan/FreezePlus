@@ -1,6 +1,6 @@
 package me.yonatanx.FreezePlus.cmds;
 
-import me.yonatanx.FreezePlus.freeze.FreezeManager;
+import me.yonatanx.FreezePlus.FreezePlus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class UnfreezeCmd implements CommandExecutor {
         if (commandSender.hasPermission("freezeplus.unfreeze")){
             if (strings.length == 1){
                 Player player = Bukkit.getPlayer(strings[0]);
-                FreezeManager.unfreezePlayer(player);
+                FreezePlus.get().getFreezeManager().unfreezePlayer(player);
 
                 commandSender.sendMessage(ChatColor.GRAY + "You have unfroze " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + ".");
             }

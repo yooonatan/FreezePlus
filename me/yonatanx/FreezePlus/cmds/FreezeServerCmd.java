@@ -1,5 +1,6 @@
 package me.yonatanx.FreezePlus.cmds;
 
+import me.yonatanx.FreezePlus.FreezePlus;
 import me.yonatanx.FreezePlus.freeze.FreezeManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,10 +15,11 @@ public class FreezeServerCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender.hasPermission("freezeplus.freezeserver")) {
-            if (FreezeManager.isServerFrozen())
-                FreezeManager.unfreezeServer();
+            FreezeManager fm = FreezePlus.get().getFreezeManager();
+            if (fm.isServerFrozen())
+                fm.unfreezeServer();
             else
-                FreezeManager.freezeServer();
+                fm.freezeServer();
         }
         else commandSender.sendMessage(ChatColor.RED + "No permission.");
         return true;

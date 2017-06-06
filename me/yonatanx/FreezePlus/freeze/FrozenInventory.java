@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class FrozenInventory {
 
-    public static Inventory getTopInv(){
+    public Inventory getTopInv(){
         Inventory inventory = Bukkit.createInventory(null, 54, FreezeUtils.getInventoryTitle());
 
         fillWithPane(inventory, DyeColor.WHITE, 0, 4);
@@ -59,11 +59,11 @@ public class FrozenInventory {
         return inventory;
     }
 
-    public static ItemStack[] getBottomInv(){
+    public ItemStack[] getBottomInv(){
         return new ItemStack[]{imComing(), iDontHaveTeamSpeak()};
     }
 
-    public static ItemStack imComing(){
+    public ItemStack imComing(){
         ItemStack itemStack = new ItemStack(Material.WOOL, 1, DyeColor.LIME.getData());
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.GREEN + "I'm coming!");
@@ -71,7 +71,7 @@ public class FrozenInventory {
         return itemStack;
     }
 
-    public static ItemStack iDontHaveTeamSpeak(){
+    public ItemStack iDontHaveTeamSpeak(){
         ItemStack itemStack = new ItemStack(Material.WOOL, 1, DyeColor.RED.getData());
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.RED + "I don't have TeamSpeak!");
@@ -79,7 +79,7 @@ public class FrozenInventory {
         return itemStack;
     }
 
-    private static void fillWithPane(Inventory inventory, DyeColor color, int start, int count){
+    private void fillWithPane(Inventory inventory, DyeColor color, int start, int count){
         ItemStack itemStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, color.getData());
         itemStack.setItemMeta(FreezeUtils.applyFrozenIM(itemStack).getItemMeta());
 
