@@ -14,14 +14,15 @@ import org.bukkit.command.CommandSender;
 public class UnfreezeServerCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender.hasPermission("freezeplus.unfreezeserver")){
-            FreezeManager fm = FreezePlus.get().getFreezeManager();
-            if (fm.isServerFrozen())
-                fm.unfreezeServer();
-            else
-                commandSender.sendMessage(ChatColor.RED + "Server isn't frozen!");
+        if (!commandSender.hasPermission("freezeplus.unfreezeserver")){
+            commandSender.sendMessage(ChatColor.RED + "No permission.");
+            return true;
         }
-        else commandSender.sendMessage(ChatColor.RED + "No permission.");
+
+        FreezeManager fm = FreezePlus.get().getFreezeManager();
+        if (fm.isServerFrozen()) fm.unfreezeServer();
+        else commandSender.sendMessage(ChatColor.RED + "Server isn't frozen!");
+
         return true;
     }
 }
