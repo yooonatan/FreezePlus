@@ -15,16 +15,21 @@ import org.bukkit.entity.Player;
 public class UnfreezeCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender.hasPermission("freezeplus.unfreeze")){
-            if (strings.length == 1){
-                Player player = Bukkit.getPlayer(strings[0]);
-                FreezePlus.get().getFreezeManager().unfreezePlayer(player);
 
-                commandSender.sendMessage(ChatColor.GRAY + "You have unfroze " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + ".");
-            }
-            else commandSender.sendMessage(ChatColor.RED + getSyntax());
+        if (!commandSender.hasPermission("freezeplus.unfreeze")){
+            commandSender.sendMessage(ChatColor.RED + "No permission.");
+            return true;
         }
-        else commandSender.sendMessage(ChatColor.RED + "No permission.");
+
+        if (strings.length != 1){
+            commandSender.sendMessage(ChatColor.RED + getSyntax());
+            return true;
+        }
+
+        Player player = Bukkit.getPlayer(strings[0]);
+        FreezePlus.get().getFreezeManager().unfreezePlayer(player);
+        commandSender.sendMessage(ChatColor.GRAY + "You have unfroze " + ChatColor.GOLD + player.getName() + ChatColor.GRAY + ".");
+
         return true;
     }
 
